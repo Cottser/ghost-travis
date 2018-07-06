@@ -18,6 +18,7 @@ script:
   # Open ngrok tunnel
   - $PWD/ngrok authtoken $NGROK_TOKEN
   - $PWD/ngrok http 8000 > /dev/null &
+  - sleep 60
   # Execute Ghost Inspector tests using the ngrok tunnel
   - curl 'http://127.0.0.1:4040/api/tunnels'
   - curl "https://api.ghostinspector.com/v1/suites/$GHOST_SUITE_ID/execute/?apiKey=$GHOST_API_KEY&startUrl=$(curl 'http://127.0.0.1:4040/api/tunnels' | jq -r '.tunnels[1].public_url')" > $PWD/ghostinspector.json
